@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="ykj 的个人博客，记录个人简介、技术栈与项目经历。"
+    />
+    <title>ykj 的博客</title>
+    <link rel="icon" href="./public/小鸭.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#/profile" aria-label="返回个人简介">
+        <img src="./public/小鸭.svg" alt="" class="brand-icon" />
+        <span>ykj的世界</span>
+      </a>
+
+      <nav class="site-nav" aria-label="主导航">
+        <a href="#/profile" class="nav-link" data-route-link="/profile">个人简介</a>
+        <a href="#/stack" class="nav-link" data-route-link="/stack">技术栈</a>
+        <a href="#/projects" class="nav-link" data-route-link="/projects">项目经历</a>
+      </nav>
+    </header>
+
+    <main id="app" class="route-window" aria-live="polite"></main>
+
+    <footer class="site-footer">
+      <span>© 2026 ykj</span>
+      <a href="#/profile">回到首页</a>
+    </footer>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

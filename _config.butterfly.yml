@@ -1,0 +1,80 @@
+nav:
+  logo:
+  display_title: false
+  display_post_title: true
+  fixed: true
+
+menu:
+  首页: / || fas fa-home
+  归档: /archives/ || fas fa-archive
+
+favicon: /favicon.svg
+
+avatar:
+  img: /favicon.svg
+  effect: false
+
+disable_top_img: false
+default_top_img: false
+index_img: false
+archive_img: false
+tag_img: false
+category_img: false
+footer_img: false
+background:
+
+subtitle:
+  enable: true
+  effect: true
+  source: false
+  sub:
+    - 记录工程学习与 AI 实践
+    - 在宇宙里写一点代码
+
+index_layout: 3
+index_post_content:
+  method: false
+
+aside:
+  enable: true
+  hide: false
+  button: true
+  mobile: false
+  position: right
+  card_author:
+    enable: true
+    description: 后端工程 / AI 应用 / 持续学习
+    button:
+      enable: true
+      icon: fab fa-github
+      text: GitHub
+      link: https://github.com/yukaijun2001
+  card_announcement:
+    enable: true
+    content: 欢迎来到 Yukai's Blog
+  card_recent_post:
+    enable: true
+    limit: 5
+    sort: date
+  card_categories:
+    enable: true
+    limit: 8
+  card_tags:
+    enable: true
+    limit: 24
+    color: true
+  card_archives:
+    enable: true
+    type: monthly
+    format: YYYY年MM月
+    order: -1
+    limit: 8
+
+footer:
+  owner:
+    enable: true
+    since: 2026
+  copyright:
+    enable: false
+
+rightside_bottom: 40px

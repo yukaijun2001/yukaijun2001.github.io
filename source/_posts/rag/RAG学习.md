@@ -4,6 +4,7 @@ date: 2026-07-01 03:33:00
 tags:
     - 学习
     - RAG
+mathjax: true
 ---
 
 # RAG学习
@@ -134,11 +135,11 @@ Embedding向量的长度没有明确的语义含义，我们只关心方向。�
 自查询发生在用户输入到检索文档之间的意图解析阶段，整个流程分这么几步:
 用户输入一个查询后，系统先判断要不要做自查询。如果用户问得很明确，直接争原始查询去检索就行。如果用户表述模糊、带隐含条件，就进入意图解折环节，让LLM 把自然语言拆成语义关键词和元数据过滤条件，生成结构化查询。然后拿着这个结构化查询去向量库做检索，结合元数据过滤筛选文档，最后排序后送给生成模型出答案。
 
-![image.png](RAG%E5%AD%A6%E4%B9%A0/image.png)
+{% asset_img image.png image.png %}
 
-![01c0901126224517ffa30f7b50f4fcc6.png](RAG%E5%AD%A6%E4%B9%A0/01c0901126224517ffa30f7b50f4fcc6.png)
+{% asset_img 01c0901126224517ffa30f7b50f4fcc6.png 01c0901126224517ffa30f7b50f4fcc6.png %}
 
-![image.png](RAG%E5%AD%A6%E4%B9%A0/image%201.png)
+{% asset_img "image 1.png" image.png %}
 
 </aside>
 
@@ -151,37 +152,33 @@ embedding模型只做文档——>向量，不进行检索。检索需要向量�
 ## 算法
 
 - 余弦相似度
-    
-    公式：对于两个n维向量
-    
+
+    公式：对于两个 n 维向量 $A = (a_1, a_2, \dots, a_n)$ 和 $B = (b_1, b_2, \dots, b_n)$
+
     $$
-    A = (a_1, a_2, \dots, a_n) 和 B = (b_1, b_2, \dots, b_n)
-    \\
-    \operatorname{Similarity}(A, B)=\cos (\theta)=\frac{A \cdot B}{\|A\|\|B\|}
-    \\
-    展开后
-    \cos (\theta)=\frac{\sum_{i=1}^{n} a_{i} b_{i}}{\sqrt{\sum_{i=1}^{n} a_{i}^{2}} \cdot \sqrt{\sum_{i=1}^{n} b_{i}^{2}}}
-    
+    \mathrm{Similarity}(A, B)=\cos(\theta)=\frac{A \cdot B}{\|A\|\|B\|}
     $$
-    
+
+    展开后：
+
+    $$
+    \cos(\theta)=\frac{\sum_{i=1}^{n} a_i b_i}{\sqrt{\sum_{i=1}^{n} a_i^2} \cdot \sqrt{\sum_{i=1}^{n} b_i^2}}
+    $$
+
 - 欧式距离
-    
-    公式：对于两个n维向量
-    
+
+    公式：对于两个 n 维向量 $A = (a_1, a_2, \dots, a_n)$ 和 $B = (b_1, b_2, \dots, b_n)$
+
     $$
-    A = (a_1, a_2, \dots, a_n) 和 B = (b_1, b_2, \dots, b_n)
-    \\
-    
-    d(A, B)=\sqrt{\sum_{i=1}^{n}\left(a_{i}-b_{i}\right)^{2}}
-    
+    d(A, B)=\sqrt{\sum_{i=1}^{n}\left(a_i-b_i\right)^2}
     $$
-    
+
 - 点积
-    
+
     公式：
-    
+
     $$
-    A \cdot B=\|A\|\|B\| \cos (\theta)
+    A \cdot B=\|A\|\|B\| \cos(\theta)
     $$
     
 

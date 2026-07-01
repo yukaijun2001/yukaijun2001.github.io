@@ -6,8 +6,8 @@
   --cosmic-line: rgba(175, 203, 255, 0.14);
   --cosmic-line-strong: rgba(190, 218, 255, 0.24);
   --cosmic-text: #edf4ff;
-  --cosmic-muted: #a6b2c7;
-  --cosmic-dim: #788399;
+  --cosmic-muted: #c3cee2;
+  --cosmic-dim: #a8b4ca;
   --cosmic-cyan: #72f7ff;
   --cosmic-blue: #8fb4ff;
   --cosmic-violet: #b78cff;
@@ -231,16 +231,30 @@ body::after {
 .article-title,
 .article-title a,
 #recent-posts > .recent-post-item > .recent-post-info > .article-title,
+#post-info .post-title,
+#page-header #post-info .post-title,
+.post-title,
 #page h1,
 #page h2,
 #page h3,
+#page h4,
+#page h5,
+#page h6,
 #post h1,
 #post h2,
 #post h3,
+#post h4,
+#post h5,
+#post h6,
 .article-sort-title,
 .article-sort-item-title,
 #aside-content .author-info-name {
   color: #ffffff;
+}
+
+#post-info .post-title,
+#page-header #post-info .post-title {
+  color: #ffffff !important;
 }
 
 .article-title:hover,
@@ -258,7 +272,7 @@ body::after {
 #category,
 #aside-content .card-widget,
 #article-container {
-  color: #dfe8f8;
+  color: #f4f8ff;
 }
 
 a,
@@ -306,7 +320,7 @@ a:hover,
 }
 
 #article-container blockquote {
-  color: #d8e2f1;
+  color: #eef5ff;
   background: rgba(114, 247, 255, 0.055);
   border-left: 3px solid var(--cosmic-cyan);
   border-radius: 0 12px 12px 0;

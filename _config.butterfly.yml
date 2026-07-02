@@ -6,7 +6,7 @@ nav:
 
 menu:
   首页: / || fas fa-home
-  归档: /archives/ || fas fa-archive
+  文章: /archives/ || fas fa-archive
 
 favicon: /favicon.svg
 
@@ -33,11 +33,11 @@ math:
 
 subtitle:
   enable: true
-  effect: true
+  effect: false
   source: false
   sub:
-    - 记录工程学习与 AI 实践
-    - 在宇宙里写一点代码
+    - 后端、AI 工具与工程实践笔记
+    - 少一点口号，多一点细节
 
 index_layout: 3
 index_post_content:
@@ -51,7 +51,7 @@ aside:
   position: right
   card_author:
     enable: true
-    description: 后端工程 / AI 应用 / 持续学习
+    description: 后端工程 / AI 工具 / 项目复盘
     button:
       enable: true
       icon: fab fa-github
@@ -59,7 +59,7 @@ aside:
       link: https://github.com/yukaijun2001
   card_announcement:
     enable: true
-    content: 欢迎来到 Yukai's Blog
+    content: 记录实践、问题和复盘
   card_recent_post:
     enable: true
     limit: 5
@@ -70,7 +70,7 @@ aside:
   card_tags:
     enable: true
     limit: 24
-    color: true
+    color: false
   card_archives:
     enable: true
     type: monthly

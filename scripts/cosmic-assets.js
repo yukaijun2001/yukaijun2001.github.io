@@ -5,9 +5,5 @@ hexo.extend.injector.register('head_end', () => {
 });
 
 hexo.extend.injector.register('body_begin', () => {
-  return '<canvas id="cosmic-particles" aria-hidden="true"></canvas><div class="cosmic-veil" aria-hidden="true"></div>';
-});
-
-hexo.extend.injector.register('body_end', () => {
-  return '<script src="/js/cosmic.js"></script>';
+  return '<div class="site-backdrop" aria-hidden="true"></div>';
 });

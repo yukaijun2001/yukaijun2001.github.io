@@ -1,0 +1,66 @@
+---
+import ArticleCard from "@/components/ArticleCard.astro";
+import Pagination from "@/components/Pagination.astro";
+import TagPill from "@/components/TagPill.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getArticles, getTaxonomy } from "@/data/articles";
+
+const articles = await getArticles();
+const { categories, tags } = getTaxonomy(articles);
+---
+
+<BaseLayout title="文章">
+  <section class="container-page pb-12 pt-16">
+    <div class="max-w-2xl">
+      <h1 class="text-balance text-4xl font-extrabold leading-tight text-[color:var(--text)] md:text-[40px]">所有文章</h1>
+      <p class="mt-4 text-base leading-8 text-[color:var(--muted)]">记录技术成长、产品实践和独立开发路上的具体问题。</p>
+    </div>
+
+    <div class="mt-8 grid gap-4 lg:grid-cols-[220px_1fr]">
+      <aside class="surface-card h-max rounded-[20px] p-5">
+        <h2 class="text-sm font-bold text-[color:var(--text)]">分类筛选</h2>
+        <div class="mt-4 grid gap-2">
+          {categories.slice(0, 6).map((category) => (
+            <a href={`/archive?category=${encodeURIComponent(category.name)}`} class="flex items-center justify-between rounded-xl px-3 py-2 text-sm font-semibold text-[color:var(--body)] hover:bg-[color:var(--surface-soft)] hover:text-[color:var(--primary)]">
+              <span>{category.name}</span>
+              <span class="font-mono text-xs tabular-nums text-[color:var(--muted)]">{category.count}</span>
+            </a>
+          ))}
+        </div>
+      </aside>
+
+      <div>
+        <div class="surface-card mb-5 rounded-[20px] p-5">
+          <div class="flex flex-wrap gap-2">
+            <TagPill label="全部" href="/archive" />
+            {tags.slice(0, 10).map(([tag, count]) => <TagPill label={tag} count={count} />)}
+          </div>
+        </div>
+        <div class="grid gap-5">
+          {articles.map((article) => (
+            <div data-article data-category={article.category} data-tags={article.tags.join("|")}>
+              <ArticleCard article={article} horizontal />
+            </div>
+          ))}
+          <p class="hidden py-12 text-center text-sm text-[color:var(--muted)]" data-empty>没有找到匹配的文章。</p>
+        </div>
+        {articles.length > 10 && <Pagination />}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const category = params.get("category");
+  const tag = params.get("tag");
+  const articles = document.querySelectorAll<HTMLElement>("[data-article]");
+  let visible = 0;
+  articles.forEach((article) => {
+    const matches = (!category || article.dataset.category === category) &&
+      (!tag || (article.dataset.tags ?? "").split("|").includes(tag));
+    article.classList.toggle("hidden", !matches);
+    if (matches) visible += 1;
+  });
+  document.querySelector("[data-empty]")?.classList.toggle("hidden", visible !== 0);
+</script>

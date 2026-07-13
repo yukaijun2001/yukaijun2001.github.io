@@ -1,0 +1,22 @@
+<aside class="sticky top-24 hidden xl:block">
+  <div class="surface-card rounded-[20px] p-5">
+    <h2 class="text-sm font-bold text-[color:var(--text)]">目录</h2>
+    <nav class="mt-4 grid gap-3 text-sm" aria-label="文章目录" data-toc></nav>
+  </div>
+</aside>
+
+<script>
+  const toc = document.querySelector<HTMLElement>("[data-toc]");
+  const headings = document.querySelectorAll<HTMLElement>(".article-prose h1, .article-prose h2, .article-prose h3");
+  if (toc) {
+    headings.forEach((heading, index) => {
+      if (!heading.id) heading.id = `section-${index + 1}`;
+      const link = document.createElement("a");
+      link.href = `#${heading.id}`;
+      link.textContent = `${index + 1}. ${heading.textContent ?? ""}`;
+      const nested = heading.tagName === "H2" ? "pl-4 text-[13px]" : heading.tagName === "H3" ? "pl-7 text-xs" : "";
+      link.className = `rounded-xl px-2 py-1.5 text-[color:var(--muted)] hover:bg-[color:var(--surface-soft)] hover:text-[color:var(--primary)] ${nested}`;
+      toc.append(link);
+    });
+  }
+</script>

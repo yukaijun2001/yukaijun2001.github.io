@@ -1,0 +1,89 @@
+---
+import ArticleCard from "@/components/ArticleCard.astro";
+import Icon from "@/components/Icon.astro";
+import TagPill from "@/components/TagPill.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getArticles, getTaxonomy } from "@/data/articles";
+import { siteConfig } from "@/data/site";
+
+const articles = await getArticles();
+const featured = articles.filter((article) => article.featured).slice(0, 3);
+const { tags } = getTaxonomy(articles);
+---
+
+<BaseLayout>
+  <section class="container-page grid gap-12 pb-12 pt-14 lg:grid-cols-[1fr_0.92fr] lg:items-center lg:pb-20 lg:pt-20">
+    <div>
+      <h1 class="max-w-2xl text-5xl font-extrabold leading-[1.08] tracking-normal text-[color:var(--text)] md:text-[56px]">
+        <span class="block">记录技术，</span>
+        <span class="block">分享思考，</span>
+        <span class="block">持续创造。</span>
+      </h1>
+      <p class="mt-6 max-w-xl text-lg leading-9 text-[color:var(--body)]">{siteConfig.role}</p>
+      <div class="mt-9 flex flex-wrap gap-3">
+        <a href="/archive" class="button-primary">
+          开始阅读
+          <Icon name="arrow-right" />
+        </a>
+        <a href={siteConfig.socials.github} class="button-secondary" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="mt-9 flex flex-wrap gap-4 text-sm font-semibold text-[color:var(--muted)]">
+        <span>后端服务</span>
+        <span>·</span>
+        <span>RAG 应用</span>
+        <span>·</span>
+        <span>测试自动化</span>
+        <span>·</span>
+        <span>工程实践</span>
+      </div>
+    </div>
+    <div class="relative">
+      <div class="absolute inset-8 rounded-full bg-blue-200/40 blur-3xl"></div>
+      <img
+        src="/images/hero-developer.svg"
+        alt="开发者在笔记本电脑前写作和编程的插画"
+        width="900"
+        height="720"
+        fetchpriority="high"
+        class="relative w-full rounded-[32px] shadow-lift"
+      />
+    </div>
+  </section>
+
+  <section class="container-page py-12">
+    <div class="mb-7 flex items-end justify-between gap-6">
+      <div>
+        <h2 class="section-title">精选文章</h2>
+        <p class="section-kicker mt-2">更适合从这里开始了解这个博客的写作方向。</p>
+      </div>
+      <a href="/archive" class="hidden text-sm font-bold text-[color:var(--primary)] sm:inline-flex">查看更多 →</a>
+    </div>
+    <div class="grid gap-6 lg:grid-cols-3">
+      {featured.map((article) => <ArticleCard article={article} />)}
+    </div>
+  </section>
+
+  <section class="container-page py-12">
+    <div class="mb-7 flex items-end justify-between gap-6">
+      <div>
+        <h2 class="section-title">最新文章</h2>
+        <p class="section-kicker mt-2">持续记录技术实践、产品思考和学习笔记。</p>
+      </div>
+      <a href="/archive" class="hidden text-sm font-bold text-[color:var(--primary)] sm:inline-flex">查看全部 →</a>
+    </div>
+    <div class="grid gap-5 md:grid-cols-2">
+      {articles.map((article) => <ArticleCard article={article} compact horizontal />)}
+    </div>
+  </section>
+
+  <section class="container-page py-12">
+    <div class="mb-7">
+      <h2 class="section-title">热门标签</h2>
+      <p class="section-kicker mt-2">按技术主题和写作场景快速进入内容。</p>
+    </div>
+    <div class="flex flex-wrap gap-3">
+      {tags.slice(0, 14).map(([tag, count]) => <TagPill label={tag} count={count} />)}
+    </div>
+  </section>
+
+</BaseLayout>

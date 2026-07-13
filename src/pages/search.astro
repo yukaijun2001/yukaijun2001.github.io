@@ -1,0 +1,14 @@
+---
+import SearchBox from "@/components/SearchBox.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="搜索">
+  <section class="container-page pt-16">
+    <div class="mx-auto max-w-3xl">
+      <h1 class="text-balance text-4xl font-extrabold leading-tight text-[color:var(--text)] md:text-[40px]">搜索博客</h1>
+      <p class="mt-4 text-base leading-8 text-[color:var(--muted)]">用 Command Palette 风格快速检索文章、分类和标签。</p>
+    </div>
+  </section>
+  <SearchBox />
+</BaseLayout>

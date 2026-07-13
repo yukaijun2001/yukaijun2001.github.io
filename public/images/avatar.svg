@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="420" viewBox="0 0 420 420" role="img" aria-label="Alex avatar">
+  <rect width="420" height="420" rx="210" fill="#eaf3ff"/>
+  <circle cx="210" cy="182" r="88" fill="#f0bd9d"/>
+  <path d="M124 165c20-88 147-111 191-25 11 22 13 46 6 73-58-2-103-25-135-69-13 22-33 36-62 21Z" fill="#111827"/>
+  <path d="M142 330c18-72 118-86 137 0" fill="#1e293b"/>
+  <rect x="142" y="150" width="56" height="38" rx="16" fill="none" stroke="#111827" stroke-width="10"/>
+  <rect x="224" y="150" width="56" height="38" rx="16" fill="none" stroke="#111827" stroke-width="10"/>
+  <path d="M198 169h26" stroke="#111827" stroke-width="10"/>
+  <path d="M183 232c18 15 44 15 62 0" stroke="#111827" stroke-width="9" stroke-linecap="round"/>
+</svg>

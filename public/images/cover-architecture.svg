@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420" role="img" aria-label="Architecture article cover">
+  <rect width="720" height="420" rx="28" fill="#f1f5f9"/>
+  <rect x="112" y="84" width="132" height="96" rx="24" fill="#fff" stroke="#cbd5e1" stroke-width="4"/>
+  <rect x="294" y="84" width="132" height="96" rx="24" fill="#fff" stroke="#cbd5e1" stroke-width="4"/>
+  <rect x="476" y="84" width="132" height="96" rx="24" fill="#fff" stroke="#cbd5e1" stroke-width="4"/>
+  <rect x="203" y="244" width="132" height="96" rx="24" fill="#dbeafe"/>
+  <rect x="385" y="244" width="132" height="96" rx="24" fill="#e0e7ff"/>
+  <path d="M244 132h50m132 0h50M294 180l-25 64m132-64 50 64" stroke="#3b82f6" stroke-width="8" stroke-linecap="round"/>
+</svg>

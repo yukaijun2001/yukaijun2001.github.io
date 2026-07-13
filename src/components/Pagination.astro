@@ -1,0 +1,32 @@
+---
+import Icon from "./Icon.astro";
+
+const pages = [1, 2, 3, 4, 5];
+---
+
+<nav class="mt-12 flex items-center justify-center gap-2" aria-label="分页">
+  <a class="button-secondary min-h-10 px-3 py-2 text-xs" href="/archive?page=1">
+    <Icon name="chevron-left" size={15} />
+    上一页
+  </a>
+  {
+    pages.map((page) => (
+      <a
+        href={`/archive?page=${page}`}
+        aria-current={page === 1 ? "page" : undefined}
+        class:list={[
+          "grid h-10 w-10 place-items-center rounded-full text-sm font-bold transition-colors",
+          page === 1
+            ? "bg-[color:var(--primary)] text-white"
+            : "border border-[color:var(--border)] bg-[color:var(--surface)] text-[color:var(--body)] hover:text-[color:var(--primary)]"
+        ]}
+      >
+        {page}
+      </a>
+    ))
+  }
+  <a class="button-secondary min-h-10 px-3 py-2 text-xs" href="/archive?page=2">
+    下一页
+    <Icon name="chevron-right" size={15} />
+  </a>
+</nav>

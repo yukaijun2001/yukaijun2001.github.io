@@ -1,0 +1,14 @@
+---
+type Props = {
+  label: string;
+  count?: number;
+  href?: string;
+};
+
+const { label, count, href = `/archive?tag=${encodeURIComponent(label)}` } = Astro.props;
+---
+
+<a class="tag-pill hover:border-[color:var(--primary)] hover:text-[color:var(--primary)]" href={href}>
+  <span>{label}</span>
+  {typeof count === "number" && <span class="ml-1.5 text-[color:var(--muted)]">({count})</span>}
+</a>

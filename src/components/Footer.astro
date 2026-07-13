@@ -1,0 +1,32 @@
+---
+import { navItems, siteConfig } from "@/data/site";
+import Icon from "./Icon.astro";
+---
+
+<footer class="mt-24 border-t border-[color:var(--border)] bg-[color:var(--surface-soft)]">
+  <div class="container-page grid gap-10 py-12 md:grid-cols-[1.2fr_1fr] md:items-center">
+    <div>
+      <a href="/" class="inline-flex items-center gap-2 text-lg font-bold text-[color:var(--text)]" translate="no">
+        <img src="/favicon.svg" alt="" width="30" height="28" class="h-8 w-8 object-contain" />
+        {siteConfig.name}
+      </a>
+      <p class="mt-3 max-w-md text-sm leading-7 text-[color:var(--muted)]">{siteConfig.description}</p>
+    </div>
+    <div class="grid gap-5 md:justify-items-end">
+      <nav class="flex flex-wrap gap-x-5 gap-y-2 text-sm font-semibold text-[color:var(--muted)]" aria-label="页脚导航">
+        {navItems.map((item) => <a class="hover:text-[color:var(--primary)]" href={item.href}>{item.label}</a>)}
+      </nav>
+      <div class="flex gap-2">
+        <a class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--border)] bg-[color:var(--surface)] text-[color:var(--body)] hover:text-[color:var(--primary)]" href={siteConfig.socials.github} aria-label="GitHub">
+          <Icon name="github" />
+        </a>
+        <a class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--border)] bg-[color:var(--surface)] text-[color:var(--body)] hover:text-[color:var(--primary)]" href={siteConfig.socials.email} aria-label="邮件联系">
+          <Icon name="mail" />
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-[color:var(--border)] py-5 text-center text-xs text-[color:var(--muted)]">
+    © 2026 {siteConfig.name}. All rights reserved.
+  </div>
+</footer>

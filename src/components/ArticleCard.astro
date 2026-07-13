@@ -1,0 +1,55 @@
+---
+import type { Article } from "@/data/articles";
+import { formatDate } from "@/data/format";
+import Icon from "./Icon.astro";
+import TagPill from "./TagPill.astro";
+
+type Props = {
+  article: Article;
+  compact?: boolean;
+  horizontal?: boolean;
+};
+
+const { article, compact = false, horizontal = false } = Astro.props;
+---
+
+<article
+  class:list={[
+    "group surface-card overflow-hidden rounded-[20px] transition-transform hover:-translate-y-1",
+    horizontal ? "grid gap-5 p-3 sm:grid-cols-[220px_1fr]" : "flex h-full flex-col"
+  ]}
+>
+  <a href={article.href} class="block overflow-hidden rounded-2xl" aria-label={`阅读文章：${article.title}`}>
+    <img
+      src={article.cover}
+      alt=""
+      width="720"
+      height="420"
+      loading={compact ? "lazy" : "eager"}
+      fetchpriority={compact ? undefined : "high"}
+      class:list={[
+        "h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]",
+        horizontal ? "aspect-[4/3]" : "aspect-[16/9]"
+      ]}
+    />
+  </a>
+  <div class:list={[horizontal ? "p-2" : "flex flex-1 flex-col p-5"]}>
+    <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-semibold text-[color:var(--muted)]">
+      <span>{article.category}</span>
+      <span class="h-1 w-1 rounded-full bg-[color:var(--border)]"></span>
+      <span class="inline-flex items-center gap-1"><Icon name="calendar" size={14} />{formatDate(article.date)}</span>
+      <span class="inline-flex items-center gap-1"><Icon name="clock" size={14} />{article.readTime}</span>
+    </div>
+    <h3 class:list={["mt-3 text-pretty font-bold leading-snug text-[color:var(--text)] group-hover:text-[color:var(--primary)]", compact ? "text-base" : "text-xl"]}>
+      <a href={article.href}>{article.title}</a>
+    </h3>
+    <p class:list={["mt-3 leading-7 text-[color:var(--muted)]", compact ? "line-clamp-2 text-sm" : "text-sm"]}>{article.excerpt}</p>
+    {
+      !compact && (
+        <div class="mt-5 flex flex-wrap gap-2">
+          {article.tags.slice(0, 3).map((tag) => <TagPill label={tag} />)}
+        </div>
+      )
+    }
+  </div>
+</article>

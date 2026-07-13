@@ -1,0 +1,106 @@
+---
+import { getArticles, getTaxonomy } from "@/data/articles";
+import Icon from "./Icon.astro";
+
+const articles = await getArticles();
+const { categories, tags } = getTaxonomy(articles);
+---
+
+<section class="container-page py-16">
+  <div class="mx-auto max-w-3xl">
+    <div class="surface-card overflow-hidden rounded-[28px]">
+      <div class="border-b border-[color:var(--border)] p-4">
+        <label class="sr-only" for="site-search">搜索文章、标签或分类</label>
+        <div class="flex items-center gap-3 rounded-2xl bg-[color:var(--surface-soft)] px-4 py-3 focus-within:ring-4 focus-within:ring-[color:var(--ring)]">
+          <Icon name="search" class="text-[color:var(--muted)]" />
+          <input
+            id="site-search"
+            name="q"
+            type="search"
+            autocomplete="off"
+            placeholder="搜索文章、标签或分类…"
+          class="min-w-0 flex-1 bg-transparent text-base font-semibold text-[color:var(--text)] placeholder:text-[color:var(--muted)]"
+          data-search-input
+        />
+          <kbd class="hidden rounded-lg border border-[color:var(--border)] px-2 py-1 font-mono text-xs text-[color:var(--muted)] sm:block">⌘&nbsp;K</kbd>
+        </div>
+      </div>
+      <div class="grid gap-2 p-3" data-search-results aria-live="polite">
+        {
+          articles.map((article) => (
+            <a
+              href={article.href}
+              class="search-item grid gap-1 rounded-2xl px-4 py-3 hover:bg-[color:var(--surface-soft)]"
+              data-search-item={`${article.title} ${article.excerpt} ${article.category} ${article.tags.join(" ")}`}
+            >
+              <span class="text-sm font-bold text-[color:var(--text)]">{article.title}</span>
+              <span class="text-xs leading-6 text-[color:var(--muted)]">{article.category} · {article.tags.join(" / ")}</span>
+            </a>
+          ))
+        }
+        {
+          categories.slice(0, 4).map((category) => (
+            <a
+              href={`/tags?category=${encodeURIComponent(category.name)}`}
+              class="search-item grid gap-1 rounded-2xl px-4 py-3 hover:bg-[color:var(--surface-soft)]"
+              data-search-item={`${category.name} ${category.description}`}
+            >
+              <span class="text-sm font-bold text-[color:var(--text)]">分类：{category.name}</span>
+              <span class="text-xs leading-6 text-[color:var(--muted)]">{category.description}</span>
+            </a>
+          ))
+        }
+        {
+          tags.slice(0, 6).map(([tag, count]) => (
+            <a
+              href={`/tags?tag=${encodeURIComponent(tag)}`}
+              class="search-item flex items-center justify-between rounded-2xl px-4 py-3 hover:bg-[color:var(--surface-soft)]"
+              data-search-item={tag}
+            >
+              <span class="text-sm font-bold text-[color:var(--text)]">标签：{tag}</span>
+              <span class="text-xs font-semibold text-[color:var(--muted)]">{count} 篇文章</span>
+            </a>
+          ))
+        }
+        <p class="hidden rounded-2xl px-4 py-8 text-center text-sm text-[color:var(--muted)]" data-empty-state>
+          没有找到匹配内容，换个关键词试试。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const input = document.querySelector("[data-search-input]");
+    const items = Array.from(document.querySelectorAll("[data-search-item]"));
+    const empty = document.querySelector("[data-empty-state]");
+    if (!input || !empty) return;
+
+    const syncQuery = () => {
+      const params = new URLSearchParams(window.location.search);
+      if (input.value) params.set("q", input.value);
+      else params.delete("q");
+      const next = `${window.location.pathname}${params.toString() ? `?${params}` : ""}`;
+      window.history.replaceState({}, "", next);
+    };
+
+    const applyFilter = () => {
+      const query = input.value.trim().toLowerCase();
+      let visible = 0;
+      items.forEach((item) => {
+        const haystack = item.getAttribute("data-search-item").toLowerCase();
+        const match = !query || haystack.includes(query);
+        item.classList.toggle("hidden", !match);
+        if (match) visible += 1;
+      });
+      empty.classList.toggle("hidden", visible !== 0);
+      syncQuery();
+    };
+
+    const initial = new URLSearchParams(window.location.search).get("q");
+    if (initial) input.value = initial;
+    input.addEventListener("input", applyFilter);
+    applyFilter();
+  })();
+</script>

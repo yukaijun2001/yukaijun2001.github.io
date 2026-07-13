@@ -1,0 +1,39 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<button
+  type="button"
+  class="inline-flex h-10 w-10 items-center justify-center rounded-full text-[color:var(--body)] transition-colors hover:bg-slate-100 hover:text-[color:var(--text)] dark:hover:bg-white/10"
+  aria-label="切换深色模式"
+  data-theme-toggle
+>
+  <Icon name="sun" class="hidden dark:block" />
+  <Icon name="moon" class="dark:hidden" />
+</button>
+
+<script is:inline>
+  (() => {
+    const root = document.documentElement;
+    const storageKey = "ykj-blog-theme";
+    const applyTheme = (theme) => {
+      const isDark =
+        theme === "dark" ||
+        (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      root.classList.toggle("dark", isDark);
+      root.style.colorScheme = isDark ? "dark" : "light";
+      const themeMeta = document.querySelector('meta[name="theme-color"]');
+      if (themeMeta) themeMeta.setAttribute("content", isDark ? "#0F1115" : "#FAFAFA");
+    };
+
+    applyTheme(localStorage.getItem(storageKey));
+
+    document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const next = root.classList.contains("dark") ? "light" : "dark";
+        localStorage.setItem(storageKey, next);
+        applyTheme(next);
+      });
+    });
+  })();
+</script>

@@ -1,0 +1,78 @@
+---
+import { getCollection, render } from "astro:content";
+import ArticleCard from "@/components/ArticleCard.astro";
+import Icon from "@/components/Icon.astro";
+import Toc from "@/components/Toc.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getArticles, toArticle, type PostEntry } from "@/data/articles";
+import { formatDate } from "@/data/format";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+  return posts.map((post) => ({ params: { slug: post.data.slug }, props: { post } }));
+}
+
+const { post } = Astro.props as { post: PostEntry };
+const { Content } = await render(post);
+const article = toArticle(post);
+const articles = await getArticles();
+const currentIndex = articles.findIndex((item) => item.slug === article.slug);
+const previous = articles[currentIndex + 1];
+const next = articles[currentIndex - 1];
+const related = articles.filter((item) => item.slug !== article.slug).slice(0, 3);
+---
+
+<BaseLayout title={article.title} description={article.excerpt}>
+  <article class="container-page pb-12 pt-16">
+    <div class="grid gap-10 xl:grid-cols-[minmax(0,760px)_260px] xl:justify-center">
+      <div class="min-w-0">
+        <header>
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm font-semibold text-[color:var(--muted)]">
+            <span>{article.category}</span>
+            <span class="h-1 w-1 rounded-full bg-[color:var(--border)]"></span>
+            <span class="inline-flex items-center gap-1"><Icon name="calendar" size={15} />发布于 {formatDate(article.date)}</span>
+            <span class="inline-flex items-center gap-1"><Icon name="clock" size={15} />{article.readTime}</span>
+          </div>
+          <h1 class="mt-5 text-balance text-4xl font-extrabold leading-tight text-[color:var(--text)] md:text-[48px]">{article.title}</h1>
+          <p class="mt-5 text-lg leading-9 text-[color:var(--muted)]">{article.excerpt}</p>
+          <div class="mt-6 flex flex-wrap gap-2">
+            {article.tags.map((tag) => <a class="tag-pill" href={`/archive?tag=${encodeURIComponent(tag)}`}>{tag}</a>)}
+          </div>
+        </header>
+
+        <img src={article.cover} alt="" width="720" height="420" fetchpriority="high" class="mt-10 aspect-[16/9] w-full rounded-[24px] object-cover shadow-soft" />
+
+        <div class="article-prose mt-10">
+          <Content />
+        </div>
+
+        {(previous || next) && (
+          <nav class="mt-12 grid gap-4 sm:grid-cols-2" aria-label="上一篇和下一篇">
+            {previous ? (
+              <a href={previous.href} class="surface-card rounded-[20px] p-5 hover:border-[color:var(--primary)]">
+                <span class="text-xs font-bold text-[color:var(--muted)]">上一篇</span>
+                <span class="mt-2 block font-bold text-[color:var(--text)]">{previous.title}</span>
+              </a>
+            ) : <span />}
+            {next && (
+              <a href={next.href} class="surface-card rounded-[20px] p-5 text-right hover:border-[color:var(--primary)]">
+                <span class="text-xs font-bold text-[color:var(--muted)]">下一篇</span>
+                <span class="mt-2 block font-bold text-[color:var(--text)]">{next.title}</span>
+              </a>
+            )}
+          </nav>
+        )}
+
+        {related.length > 0 && (
+          <section class="mt-12">
+            <h2 class="section-title">相关文章</h2>
+            <div class="mt-6 grid gap-5 md:grid-cols-3">
+              {related.map((item) => <ArticleCard article={item} compact />)}
+            </div>
+          </section>
+        )}
+      </div>
+      <Toc />
+    </div>
+  </article>
+</BaseLayout>

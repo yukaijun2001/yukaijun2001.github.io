@@ -9,7 +9,7 @@
     "preview": "astro preview --host 127.0.0.1"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.4",
+    "@astrojs/check": "^0.9.10",
     "@astrojs/tailwind": "^6.0.2",
     "astro": "^5.13.5",
     "katex": "^0.16.22",
